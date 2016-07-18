@@ -1,0 +1,186 @@
+Exercice #1
+
+source data/import-table-structure.sql;
+
+Exercice #2
+Insert one row into decodemtl_addressbook.Account
+Insert one row into decodemtl_addressbook.AddressBook
+Insert three rows into decodemtl_addressbook.Entry
+
+INSERT INTO Account (email, password, createdOn, modifiedOn) VALUES
+    ("maxime@gmail.com", "food", "2015-01-01", "2015-01-02");
+    
+INSERT INTO AddressBook (accountId, name, createdOn, modifiedOn) VALUES
+    ("434124", "Maxime Martin", "2015-01-01", "2015-01-02");
+    
+INSERT INTO Entry (addressBookId, firstName, lastName, birthday, type, subtype, contentLineOne,
+    contentLineTwo, contentLineThree, contentLineFour, contentLineFive) VALUES
+    (43414, "Maxime", "Martin", "1989-06-21", "home", "address", "500", "avenue", "du golf", "La Prairie", "ggds"),
+    (4344, "Maximilian", "Martin", "1989-06-21", "home", "address", "500", "avenue", "du golf", "La Prairie", "ggds"),
+    (434, "Jessica", "Martin", "1989-06-21", "home", "address", "500", "avenue", "du golf", "La Prairie", "ggds")
+    ;
+
+
+source data/import-account.sql;
+source data/import-addressbook.sql;
+source data/import-entry.sql;
+
+Exercise 3
+Retrieve data from the previously inserted decodemtl_addressbook.Account row
+Retrieve data from the previously inserted decodemtl_addressbook.AddressBook row
+Retrieve data from the previously inserted decodemtl_addressbook.Entry rows
+
+select * from AdressBook;
+select * from Account;
+select * from Entry;
+
+Exercise 4
+Modify the decodemtl_addressbook.Account row
+Modify the decodemtl_addressbook.AddressBook rows
+Modify the three decodemtl_addressbook.Entry rows using one query only
+
+UPDATE Account SET password="food423" WHERE email="maxime@gmail.com";
+UPDATE AdressBook SET name="Maxounet" WHERE accountId=434124;
+UPDATE Entry SET firstNamename="Maxounet";
+
+Exercise 5
+
+Delete all data from decodemtl_addressbook.Entry without using a DELETE statement
+
+truncate table AddressBook;
+
+Exercise 6
+Delete decodemtl_addressbook.Account and all associated date
+
+drop table Account;
+
+Exercise 7
+Import Database Schema from the following source file into decodemtl_addressbook_import:
+data/import-table-structure.sql
+Bulk import data from the following source files into decodemtl_addressbook_import:
+data/import-account.sql
+data/import-addressbook.sql
+data/import-entry.sql
+
+
+source data/import-table-structure.sql;
+source data/import-account.sql;
+source data/import-addressbook.sql;
+source data/import-entry.sql;
+
+Exercise 8
+What is the email of the Account identified by "63"?
+
+select email from Account where id = 63;
+
+What are the names of the AdressBooks belonging to accountId "3"?
++-------------------------------------------------+
+| email                                           |
++-------------------------------------------------+
+| consectetuer.rhoncus.Nullam@temporloremeget.org |
++-------------------------------------------------+
+
+select name from AddressBook where accountId = 3;
++---------------------------------+
+| name                            |
++---------------------------------+
+| Donec Incorporated              |
+| Ipsum Nunc LLC                  |
+| In Consectetuer Ltd             |
+| Lacus Aliquam Rutrum Industries |
+| Ac Ltd                          |
+| Mauris Consulting               |
+| Ornare Corporation              |
++---------------------------------+
+
+On which date was the AddressBook titled “Lorem Foundation” created?
+
+select * from AddressBook where name="Lorem Foundation";
++---------------------+
+| createdOn           |
++---------------------+
+| 2016-06-26 02:43:41 |
+| 2015-05-04 14:28:16 |
++---------------------+
+
+Exercise 9
+
+How many Accounts exist?
+select count(*) from Account;
++----------+
+| count(*) |
++----------+
+|     1000 |
++----------+
+
+How many Address Books exist?
+select count(*) from AddressBook;
++----------+
+| count(*) |
++----------+
+|     1100 |
++----------+
+
+How many Address Book Entries exist?
+select count(*) from Entry;
++----------+
+| count(*) |
++----------+
+|     4000 |
++----------+
+
+Exercise 10
+How many Address Book Entries are listed as born before February 12th of 1982?
+select count(*) from Entry where birthday > "1982-02-12";
++----------+
+| count(*) |
++----------+
+|     1313 |
++----------+
+
+How many Address Book Entries are listed as born on or after January 1st of 1965?
+select count(*) from Entry where birthday <= "1965-01-01";
++----------+
+| count(*) |
++----------+
+|     1403 |
++----------+
+
+Which Address Book Entry is listed as being the oldest of age?
+
+SELECT addressBookId, firstName, lastName, birthday FROM Entry ORDER BY birthday LIMIT 1;
+
++---------------+-----------+----------+---------------------+
+| addressBookId | firstName | lastName | birthday            |
++---------------+-----------+----------+---------------------+
+|            93 | Abigail   | Rollins  | 1945-09-02 09:21:58 |
++---------------+-----------+----------+---------------------+
+
+
+Exercise 11
+
+How many Address Book Entries are not listed as other?
+select count(*) from Entry where type != "other";
++----------+
+| count(*) |
++----------+
+|     2800 |
++----------+
+
+How many Address Book Entries are listed as either home or work?
+select count(*) from Entry 
+    where type = "home" or type = "work";
+    +----------+
+| count(*) |
++----------+
+|     2800 |
++----------+
+
+How many Address Book Entries are listed as phones?
+select count(*) from Entry 
+    where subtype = "phone";
+    +----------+
+| count(*) |
++----------+
+|      600 |
++----------+
